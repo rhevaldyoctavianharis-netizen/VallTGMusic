@@ -1,0 +1,22 @@
+[Unit]
+Description=MusicBot Telegram (Telethon + PyTgCalls)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# --- SESUAIKAN 3 baris di bawah ini dengan lokasi & user VPS-mu ---
+User=root
+WorkingDirectory=/root/MusicBot_Optimized
+ExecStart=/root/MusicBot_Optimized/venv/bin/python3 main.py
+
+# Pastikan proses ini bisa menemukan ffmpeg & deno walau tidak dijalankan
+# dari shell interaktif (systemd tidak membaca ~/.bashrc).
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+
+Restart=always
+RestartSec=5
+StandardOutput=append:/var/log/musicbot.log
+StandardError=append:/var/log/musicbot.log
+
+[Install]
+WantedBy=multi-user.target
