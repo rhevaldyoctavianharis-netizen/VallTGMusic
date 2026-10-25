@@ -10,6 +10,14 @@ from database.db import init_db, close_db
 from utils.cleanup import start_cleanup_task
 import config
 
+# Cek dan buat cookies.txt jika YT_COOKIES diisi lewat Heroku Config Vars
+yt_cookies = os.environ.get("YT_COOKIES")
+if yt_cookies:
+    with open("cookies.txt", "w", encoding="utf-8") as f:
+        f.write(yt_cookies)
+    print("🍪 File cookies.txt berhasil dibuat dari Environment Variable.")
+
+
 async def load_plugins():
     path = Path("plugins")
     for file in path.rglob("*.py"):
