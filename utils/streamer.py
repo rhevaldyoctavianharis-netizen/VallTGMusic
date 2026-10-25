@@ -6,7 +6,11 @@ from core.call import call
 from database.db import update_stream
 
 def sync_search_youtube(query, limit=5, start=0):
-    ydl_opts = {'extract_flat': True, 'quiet': True}
+    ydl_opts = {
+        'extract_flat': True, 
+        'quiet': True,
+        'extractor_args': {'youtube': ['player_client=android,web_embedded,default']}
+    }
     if os.path.exists("cookies.txt"):
         ydl_opts['cookiefile'] = 'cookies.txt'
     try:
@@ -24,13 +28,13 @@ def sync_download(url, role, stream_type="audio"):
     ydl_opts = {
         'outtmpl': 'downloads/%(id)s.%(ext)s', 
         'quiet': True, 
-        'noplaylist': True
+        'noplaylist': True,
+        'extractor_args': {'youtube': ['player_client=android,web_embedded,default']}
     }
     
     if os.path.exists("cookies.txt"):
         ydl_opts['cookiefile'] = 'cookies.txt'
 
-    
     if stream_type == "audio":
         ydl_opts['format'] = 'bestaudio/best'
         ydl_opts['postprocessors'] = [{
