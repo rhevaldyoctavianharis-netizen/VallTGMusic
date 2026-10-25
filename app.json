@@ -7,6 +7,7 @@
   "stack": "heroku-24",
   "buildpacks": [
     { "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest" },
+    { "url": "heroku/nodejs" },
     { "url": "heroku/python" }
   ],
   "formation": {
@@ -40,6 +41,10 @@
     },
     "FSUB_CHANNEL": {
       "description": "Channel wajib join, contoh @namachannel (opsional)",
+      "required": false
+    },
+    "YT_COOKIES": {
+      "description": "OPSIONAL: Tempel seluruh isi (teks) dari file cookies.txt YouTube Anda di sini untuk mengatasi error bot-check.",
       "required": false
     }
   }
