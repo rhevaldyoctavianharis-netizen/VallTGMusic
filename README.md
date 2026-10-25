@@ -1,9 +1,13 @@
+<div align="right">
+  <strong>🇬🇧 English</strong> | <a href="README-id.md">🇮🇩 Indonesia</a>
+</div>
+
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:7F00FF,100:E100FF&height=220&section=header&text=VallTgMusic%20New&fontSize=58&fontColor=ffffff&fontAlignY=38&desc=Telegram%20Voice%20Chat%20Music%20Bot%20%E2%80%A2%20Cepat%20%E2%80%A2%20Hemat%20%E2%80%A2%20Siap%20Deploy&descAlignY=60&descSize=18" alt="VallTgMusic New" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:7F00FF,100:E100FF&height=220&section=header&text=VallTgMusic%20New&fontSize=58&fontColor=ffffff&fontAlignY=38&desc=Telegram%20Voice%20Chat%20Music%20Bot%20%E2%80%A2%20Fast%20%E2%80%A2%20Efficient%20%E2%80%A2%20Ready%20to%20Deploy&descAlignY=60&descSize=18" alt="VallTgMusic New" width="100%"/>
 
 <a href="https://github.com/rhevaldyoctavianharis-netizen/VallTGMusic">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=20&pause=1200&color=C77DFF&center=true&vCenter=true&width=620&lines=Streaming+musik+%26+video+di+Voice+Chat;Hemat+resource%2C+portable+di+semua+OS;Auto-restart+dengan+systemd;Deploy+ke+Heroku+dalam+1+klik" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=20&pause=1200&color=C77DFF&center=true&vCenter=true&width=620&lines=Music+%26+video+streaming+in+Voice+Chat;Resource+efficient%2C+portable+on+all+OS;Auto-restart+with+systemd;Deploy+to+Heroku+in+1+click" alt="Typing SVG" />
 </a>
 
 <br/>
@@ -16,101 +20,101 @@
 
 <br/>
 
-[![Deploy ke Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rhevaldyoctavianharis-netizen/VallTGMusic)
-<a href="https://t.me/OneDotOneBot"><img src="https://img.shields.io/badge/%F0%9F%8E%A7%20Coba%20Bot-@OneDotOneBot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Coba Bot @OneDotOneBot" height="28"/></a>
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rhevaldyoctavianharis-netizen/VallTGMusic)
+<a href="https://t.me/OneDotOneBot"><img src="https://img.shields.io/badge/%F0%9F%8E%A7%20Try%20Bot-@OneDotOneBot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Try Bot @OneDotOneBot" height="28"/></a>
 
 <br/>
 
-[✨ Fitur](#-fitur) •
-[🤖 Coba Bot](#-coba-bot) •
-[📋 Kebutuhan](#-kebutuhan) •
-[🚀 Deploy Heroku](#-deploy-ke-heroku) •
-[🖥️ Setup VPS](#️-setup-cepat-di-vps-linux) •
+[✨ Features](#-features) •
+[🤖 Try Bot](#-try-bot) •
+[📋 Requirements](#-requirements) •
+[🚀 Deploy Heroku](#-deploy-to-heroku) •
+[🖥️ VPS Setup](#️-quick-vps-linux-setup) •
 [🔁 Auto-Start](#-auto-start--auto-restart-systemd) •
 [🧯 Troubleshooting](#-troubleshooting) •
-[🤝 Kontak](#-kolaborasi--kontak) •
-[👤 Kredit](#-kredit)
+[🤝 Contact](#-collaboration--contact) •
+[👤 Credits](#-credits)
 
 </div>
 
 ---
 
-## ✨ Fitur
+## ✨ Features
 
 <table>
 <tr>
 <td width="33%" valign="top">
 
 ### 🎧 Voice Chat
-Streaming musik langsung ke **Voice Chat** grup lewat PyTgCalls, dengan akun userbot yang bergabung otomatis.
+Stream music directly to group **Voice Chats** via PyTgCalls, with an auto-joining userbot account.
 
 </td>
 <td width="33%" valign="top">
 
-### ⚡ Hemat Resource
-Sudah dioptimalkan agar ringan di CPU, RAM, dan disk sehingga nyaman dijalankan di VPS kecil.
+### ⚡ Resource Efficient
+Optimized to be lightweight on CPU, RAM, and disk storage, making it run smoothly on small VPS instances.
 
 </td>
 <td width="33%" valign="top">
 
 ### 🌍 Portable
-Berjalan di **Linux, Windows, dan macOS**. Untuk VPS tersedia skrip setup otomatis.
+Runs seamlessly on **Linux, Windows, and macOS**. An automated setup script is available for VPS.
 
 </td>
 </tr>
 <tr>
 <td width="33%" valign="top">
 
-### ▶️ YouTube Stabil
-Ekstraksi lewat **yt-dlp** dengan JavaScript runtime (**Deno** atau **Node.js**) agar tidak mudah kena bot-check.
+### ▶️ Stable YouTube
+Extraction using **yt-dlp** with a JavaScript runtime (**Deno** or **Node.js**) to effectively bypass bot-checks.
 
 </td>
 <td width="33%" valign="top">
 
-### 🔁 Selalu Hidup
-Template **systemd** membuat bot menyala saat VPS reboot dan restart otomatis bila crash.
+### 🔁 Always On
+Included **systemd** templates keep the bot running on VPS reboot and auto-restarts it upon crash.
 
 </td>
 <td width="33%" valign="top">
 
-### ☁️ Siap Deploy
-Tombol **Deploy ke Heroku** dengan formulir variabel, plus `Procfile` dan `app.json` yang sudah disiapkan.
+### ☁️ Ready to Deploy
+**Deploy to Heroku** button with a configured variables form, plus ready-to-use `Procfile` and `app.json`.
 
 </td>
 </tr>
 </table>
 
-Opsi tambahan lewat `.env`: **`FSUB_CHANNEL`** (wajib join channel) dan **`CREDIT_CHANNEL`** (kredit channel Anda).
+Additional options via `.env`: **`FSUB_CHANNEL`** (force subscribe channel) and **`CREDIT_CHANNEL`** (your credit channel).
 
 ---
 
-## 🤖 Coba Bot
+## 🤖 Try Bot
 
-Ingin melihat hasilnya dulu sebelum deploy sendiri? Coba langsung bot demonya:
+Want to see how it works before deploying it yourself? Try our demo bot:
 
 <div align="center">
 
-<a href="https://t.me/OneDotOneBot"><img src="https://img.shields.io/badge/Buka%20di%20Telegram-@OneDotOneBot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Buka @OneDotOneBot"/></a>
+<a href="https://t.me/OneDotOneBot"><img src="https://img.shields.io/badge/Open%20in%20Telegram-@OneDotOneBot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Open @OneDotOneBot"/></a>
 
 </div>
 
 ---
 
-## 📋 Kebutuhan
+## 📋 Requirements
 
-| Komponen | Keterangan |
+| Component | Description |
 |---|---|
-| 🐍 **Python** | **3.9 atau lebih baru** (disarankan 3.10+) |
-| 🎞️ **ffmpeg** | Terpasang di sistem |
-| 🦕 **Deno** atau **Node.js 20+** | Dibutuhkan `yt-dlp` untuk ekstraksi YouTube yang stabil |
-| 👤 **Akun userbot** | Akun Telegram pribadi (bukan bot) yang akan join Voice Chat |
-| 🤖 **Bot Telegram** | Dibuat lewat [@BotFather](https://t.me/BotFather) |
+| 🐍 **Python** | **3.9 or newer** (3.10+ recommended) |
+| 🎞️ **ffmpeg** | Installed on the system |
+| 🦕 **Deno** or **Node.js 20+** | Required by `yt-dlp` for stable YouTube extraction |
+| 👤 **Userbot Account** | A personal Telegram account (not a bot) that will join the Voice Chat |
+| 🤖 **Telegram Bot** | Created via [@BotFather](https://t.me/BotFather) |
 
 ---
 
-## ⚙️ Konfigurasi `.env`
+## ⚙️ `.env` Configuration
 
-Salin file contoh menjadi `.env`, lalu isi nilainya:
+Copy the example file to `.env`, then fill in the values:
 
 ```bash
 # Linux / macOS
@@ -123,20 +127,20 @@ copy .env.example .env
 Copy-Item .env.example .env
 ```
 
-Buka `.env` dengan editor favorit Anda (`nano .env` di Linux/macOS, atau Notepad di Windows). Semua variabel dijelaskan di `.env.example`. Ringkasnya:
+Open `.env` with your favorite editor (`nano .env` on Linux/macOS, or Notepad on Windows). All variables are explained in `.env.example`. In short:
 
-| Variabel | Wajib | Dari mana |
+| Variable | Required | Source |
 |---|:---:|---|
 | `API_ID`, `API_HASH` | ✅ | [my.telegram.org](https://my.telegram.org) |
 | `BOT_TOKEN` | ✅ | [@BotFather](https://t.me/BotFather) |
-| `SESSION_STRING` | ✅ | Script Telethon StringSession (caranya ada di `.env.example`) |
-| `ADMIN_ID` | ✅ | ID Telegram Anda sendiri (cek via [@userinfobot](https://t.me/userinfobot)) |
-| `CREDIT_CHANNEL` | ➖ | Link channel Anda |
-| `FSUB_CHANNEL` | ➖ | Username channel wajib-join |
+| `SESSION_STRING` | ✅ | Telethon StringSession (instructions in `.env.example`) |
+| `ADMIN_ID` | ✅ | Your own Telegram ID (check via [@userinfobot](https://t.me/userinfobot)) |
+| `CREDIT_CHANNEL` | ➖ | Your channel link |
+| `FSUB_CHANNEL` | ➖ | Force-subscribe channel username |
 
-### 🔑 Dapatkan `SESSION_STRING`
+### 🔑 Get `SESSION_STRING`
 
-Cara termudah: ambil string session lewat bot generator berikut.
+Easiest way: generate a string session using the following bot.
 
 <div align="center">
 
@@ -144,42 +148,42 @@ Cara termudah: ambil string session lewat bot generator berikut.
 
 </div>
 
-1. Buka [@ssgenduabot](https://t.me/ssgenduabot) lalu ikuti petunjuknya.
-2. Salin string session yang diberikan ke `SESSION_STRING` di `.env`.
+1. Open [@ssgenduabot](https://t.me/ssgenduabot) and follow the instructions.
+2. Copy the given string session to `SESSION_STRING` in your `.env`.
 
-Alternatif tanpa bot: buat sendiri dengan Telethon `StringSession`, caranya ada di `.env.example`.
+Alternative without a bot: generate it yourself using Telethon `StringSession` (instructions in `.env.example`).
 
-> 🔒 **Penting:** `SESSION_STRING` memberi akses penuh ke akun Telegram, jadi perlakukan seperti password. Disarankan memakai **akun userbot cadangan**, bukan akun utama, dan jangan pernah membagikan `SESSION_STRING` maupun `BOT_TOKEN` ke siapa pun.
+> 🔒 **Important:** `SESSION_STRING` grants full access to a Telegram account, treat it like a password. It is highly recommended to use a **spare userbot account**, not your main account, and never share your `SESSION_STRING` or `BOT_TOKEN`.
 
 ---
 
-## 🚀 Deploy ke Heroku
+## 🚀 Deploy to Heroku
 
-> Heroku tidak memakai file `.env`. Semua pengaturan dibaca dari **Config Vars**, dan tombol Deploy akan menampilkan formulirnya.
+> Heroku does not use the `.env` file. All settings are read from **Config Vars**, and the Deploy button will display a form.
 
-**1.** Siapkan `SESSION_STRING` lebih dulu, lewat [@ssgenduabot](https://t.me/ssgenduabot) atau buat sendiri di komputer Anda (bukan di Heroku).
+**1.** Prepare your `SESSION_STRING` first, either via [@ssgenduabot](https://t.me/ssgenduabot) or locally on your computer (not on Heroku).
 
-**2.** Tekan tombol di bawah, lalu isi formulir:
+**2.** Click the button below, then fill out the form:
 
-[![Deploy ke Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rhevaldyoctavianharis-netizen/VallTGMusic)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rhevaldyoctavianharis-netizen/VallTGMusic)
 
-| Variabel | Wajib | Keterangan |
+| Variable | Required | Description |
 |---|:---:|---|
-| `API_ID` | ✅ | Dari [my.telegram.org](https://my.telegram.org) |
-| `API_HASH` | ✅ | Dari [my.telegram.org](https://my.telegram.org) |
-| `BOT_TOKEN` | ✅ | Dari [@BotFather](https://t.me/BotFather) |
-| `SESSION_STRING` | ✅ | Telethon StringSession akun userbot |
-| `ADMIN_ID` | ✅ | ID Telegram Anda (owner) |
-| `CREDIT_CHANNEL` | ➖ | Contoh: `https://t.me/channelanda` |
-| `FSUB_CHANNEL` | ➖ | `@channel` wajib join (kosong = nonaktif) |
+| `API_ID` | ✅ | From [my.telegram.org](https://my.telegram.org) |
+| `API_HASH` | ✅ | From [my.telegram.org](https://my.telegram.org) |
+| `BOT_TOKEN` | ✅ | From [@BotFather](https://t.me/BotFather) |
+| `SESSION_STRING` | ✅ | Telethon StringSession for the userbot |
+| `ADMIN_ID` | ✅ | Your Telegram ID (owner) |
+| `CREDIT_CHANNEL` | ➖ | Example: `https://t.me/yourchannel` |
+| `FSUB_CHANNEL` | ➖ | Force subscribe `@channel` (empty = disabled) |
 
-Variabel lain bisa diubah di **Settings → Config Vars** setelah deploy.
+Other variables can be modified in **Settings → Config Vars** after deployment.
 
 <details>
-<summary><b>⌨️ Deploy lewat Heroku CLI</b></summary>
+<summary><b>⌨️ Deploy via Heroku CLI</b></summary>
 
 ```bash
-heroku create nama-app-anda
+heroku create your-app-name
 heroku buildpacks:add https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest
 heroku buildpacks:add heroku/nodejs
 heroku buildpacks:add heroku/python
@@ -192,100 +196,100 @@ heroku logs --tail
 </details>
 
 <details>
-<summary><b>⚠️ Batasan Heroku yang perlu diketahui</b></summary>
+<summary><b>⚠️ Important Heroku Limitations</b></summary>
 
-- **Penyimpanan sementara.** Database, file sesi, dan folder `downloads/` hilang saat dyno restart (sekitar 24 jam sekali). Untuk data permanen, gunakan penyimpanan eksternal.
-- **`localhost` tidak bisa dipakai.** Layanan eksternal harus punya alamat publik.
-- **Cookies browser tidak ada.** Server tidak punya browser, gunakan `YT_COOKIES_FILE` bila perlu.
-- **Jangan commit rahasia.** `.env`, `SESSION_STRING`, dan API key tidak boleh masuk repo publik.
+- **Ephemeral Storage.** Databases, session files, and the `downloads/` folder are wiped when the dyno restarts (approx. every 24 hours). For persistent data, use external storage.
+- **`localhost` cannot be used.** External services require a public address.
+- **No browser cookies.** The server lacks a browser, use `YT_COOKIES_FILE` if necessary.
+- **Do not commit secrets.** `.env`, `SESSION_STRING`, and API keys should never be pushed to a public repository.
 
 </details>
 
 ---
 
-## 🖥️ Setup Cepat di VPS Linux
+## 🖥️ Quick VPS Linux Setup
 
-Berlaku untuk Ubuntu, Debian, CentOS, dan sejenisnya.
+Applies to Ubuntu, Debian, CentOS, and similar distributions.
 
 ```bash
-# 1. Upload/clone source ke VPS, lalu masuk ke foldernya
+# 1. Upload/clone source to VPS, then enter the directory
 cd VallTGMusic
 
-# 2. Jalankan skrip setup otomatis (pasang ffmpeg, Deno, venv, dependensi)
+# 2. Run the automated setup script (installs ffmpeg, Deno, venv, dependencies)
 chmod +x setup_vps.sh
 ./setup_vps.sh
 
-# 3. Salin contoh konfigurasi, lalu isi kredensial
+# 3. Copy the configuration example, then fill in credentials
 cp .env.example .env
 nano .env
 
-# 4. Jalankan bot (tes manual dulu)
+# 4. Run the bot (test manually first)
 source venv/bin/activate
 python3 main.py
 ```
 
-Jika terminal menampilkan `🚀 MusicBot Professional Berhasil Berjalan!` tanpa error, tekan `Ctrl+C` lalu lanjut ke bagian **Auto-Start** agar bot jalan permanen di background.
+If the terminal displays `🚀 MusicBot Professional Berhasil Berjalan!` without errors, press `Ctrl+C` and proceed to the **Auto-Start** section to keep the bot running in the background.
 
 ---
 
 ## 🔁 Auto-Start & Auto-Restart (systemd)
 
-Bot otomatis menyala lagi saat VPS reboot dan restart sendiri bila crash, jadi tidak perlu login SSH tiap kali.
+The bot will automatically start when the VPS reboots and restart itself if it crashes, eliminating the need to log in via SSH every time.
 
 ```bash
-# 1. Salin & sesuaikan template service
+# 1. Copy & adjust the service template
 sudo cp musicbot.service /etc/systemd/system/musicbot.service
 sudo nano /etc/systemd/system/musicbot.service
-#    → sesuaikan "User", "WorkingDirectory", dan "ExecStart"
-#      dengan lokasi folder project & user VPS Anda
+#    → adjust "User", "WorkingDirectory", and "ExecStart"
+#      with your project folder location & VPS user
 
-# 2. Aktifkan & jalankan
+# 2. Enable & start
 sudo systemctl daemon-reload
-sudo systemctl enable musicbot      # auto-start saat boot
-sudo systemctl start musicbot       # jalankan sekarang
+sudo systemctl enable musicbot      # auto-start on boot
+sudo systemctl start musicbot       # start now
 
-# 3. Cek status & log
+# 3. Check status & logs
 sudo systemctl status musicbot
-tail -f /var/log/musicbot.log       # log real-time
+tail -f /var/log/musicbot.log       # real-time logs
 ```
 
-| Perintah | Fungsi |
+| Command | Function |
 |---|---|
-| `sudo systemctl restart musicbot` | Restart manual |
-| `sudo systemctl stop musicbot` | Matikan bot |
-| `sudo systemctl status musicbot` | Lihat status |
+| `sudo systemctl restart musicbot` | Manual restart |
+| `sudo systemctl stop musicbot` | Stop the bot |
+| `sudo systemctl status musicbot` | View status |
 
 ---
 
 ## 🧯 Troubleshooting
 
 <details>
-<summary><b>Warning <code>No supported JavaScript runtime could be found</code> dari yt-dlp</b></summary>
+<summary><b>Warning <code>No supported JavaScript runtime could be found</code> from yt-dlp</b></summary>
 
-Pasang **Deno** (sudah otomatis dipasang oleh `setup_vps.sh`) atau Node.js 20+. Jika warning masih muncul:
+Install **Deno** (automatically installed by `setup_vps.sh`) or Node.js 20+. If the warning persists:
 
-- Jalankan `deno --version` untuk memastikan Deno terbaca di PATH sesi yang menjalankan bot.
-- Jika lewat systemd, pastikan `ExecStart` di `musicbot.service` memakai python dari `venv/bin/python3` (bukan python sistem), dan PATH service mencakup lokasi `deno`.
-
-</details>
-
-<details>
-<summary><b>Error <code>ValueError: Could not find the input entity</code> dari userbot</b></summary>
-
-Pastikan akun userbot sudah benar-benar menjadi **member** di grup tempat bot dipakai.
+- Run `deno --version` to ensure Deno is recognized in the PATH of the session running the bot.
+- If using systemd, ensure `ExecStart` in `musicbot.service` uses python from `venv/bin/python3` (not system python), and the service PATH includes the `deno` location.
 
 </details>
 
 <details>
-<summary><b>Bot jalan tapi tidak bisa masuk Voice Chat</b></summary>
+<summary><b>Error <code>ValueError: Could not find the input entity</code> from userbot</b></summary>
 
-Pastikan akun **userbot** (bukan akun bot) sudah join sebagai member biasa di grup tersebut, dan grup sudah punya **Voice Chat yang aktif**.
+Ensure the userbot account has explicitly joined the group where the bot is being used as a **member**.
+
+</details>
+
+<details>
+<summary><b>Bot is running but cannot join Voice Chat</b></summary>
+
+Make sure the **userbot** account (not the bot account) has joined the group as a regular member, and the group has an **active Voice Chat** running.
 
 </details>
 
 ---
 
-## 📤 Membagikan Source Code dengan Aman
+## 📤 Sharing Source Code Safely
 
 ```bash
 git init
@@ -293,48 +297,48 @@ git add .
 git commit -m "Initial commit"
 ```
 
-`.gitignore` sudah disiapkan agar `.env`, file sesi, database, dan folder `downloads/` **tidak ikut ter-commit**. Siapa pun yang clone cukup mengulangi langkah setup dengan `.env` miliknya sendiri.
+A `.gitignore` is already provided so that `.env`, session files, databases, and the `downloads/` folder **are not committed**. Anyone cloning the repo only needs to repeat the setup steps with their own `.env`.
 
-> ⚠️ Jika repo akan di-push ke GitHub **publik**, jangan pernah commit `.env` yang sudah terisi. Jalankan `git status` sebelum commit pertama untuk memastikan `.env` tidak ikut ter-tracking.
+> ⚠️ If pushing the repo to a **public** GitHub, never commit a filled `.env`. Run `git status` before the first commit to ensure `.env` is not tracked.
 
 ---
 
-## 🤝 Kolaborasi & Kontak
+## 🤝 Collaboration & Contact
 
-Perlu kolaborasi, kontak, atau yang lainnya? Kunjungi website portofolio saya:
+Need collaboration, support, or something else? Visit my portfolio website:
 
 <div align="center">
 
-<a href="https://rhevaldy.my.id"><img src="https://img.shields.io/badge/Portofolio-rhevaldy.my.id-E100FF?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Portofolio rhevaldy.my.id"/></a>
+<a href="https://rhevaldy.my.id"><img src="https://img.shields.io/badge/Portfolio-rhevaldy.my.id-E100FF?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Portfolio rhevaldy.my.id"/></a>
 <a href="https://t.me/rapaldy"><img src="https://img.shields.io/badge/Telegram-@rapaldy-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram @rapaldy"/></a>
 
 </div>
 
 ---
 
-## 👤 Kredit
+## 👤 Credits
 
 <div align="center">
 
 | | |
 |---|---|
-| 👨‍💻 **Pembuat** | [@rapaldy](https://t.me/rapaldy) |
+| 👨‍💻 **Developer** | [@rapaldy](https://t.me/rapaldy) |
 | 📢 **Channel** | [@youlittleboy](https://t.me/youlittleboy) |
 
-<a href="https://t.me/rapaldy"><img src="https://img.shields.io/badge/Chat%20Pembuat-@rapaldy-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram @rapaldy"/></a>
+<a href="https://t.me/rapaldy"><img src="https://img.shields.io/badge/Chat%20Developer-@rapaldy-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram @rapaldy"/></a>
 <a href="https://t.me/youlittleboy"><img src="https://img.shields.io/badge/Join%20Channel-@youlittleboy-7F00FF?style=for-the-badge&logo=telegram&logoColor=white" alt="Channel @youlittleboy"/></a>
 
 </div>
 
-Mau pakai atau modifikasi proyek ini? Silakan, tetapi mohon **pertahankan kredit** di atas. Terima kasih! 🙏
+Feel free to use or modify this project, but please **retain the credits** above. Thank you! 🙏
 
 ---
 
 <div align="center">
 
-### 💜 Dibuat oleh [@rapaldy](https://t.me/rapaldy) • Channel [@youlittleboy](https://t.me/youlittleboy)
+### 💜 Created by [@rapaldy](https://t.me/rapaldy) • Channel [@youlittleboy](https://t.me/youlittleboy)
 
-**⭐ Beri bintang jika proyek ini bermanfaat!**
+**⭐ Leave a star if you find this project useful!**
 
 <br/>
 
