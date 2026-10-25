@@ -5,3 +5,5 @@ python-dotenv>=1.0.1
 yt-dlp>=2024.10.01
 Pillow>=10.0.0
 yt-dlp-ejs
+yt-dlp[default]
+deno
