@@ -7,7 +7,6 @@
   "stack": "heroku-24",
   "buildpacks": [
     { "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest" },
-    { "url": "heroku/nodejs" },
     { "url": "heroku/python" }
   ],
   "formation": {
