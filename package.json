@@ -1,0 +1,12 @@
+{
+  "name": "youtube-js-runtime",
+  "version": "1.0.0",
+  "description": "Dummy package.json agar Heroku menginstal Node.js untuk yt-dlp",
+  "engines": {
+    "node": "20.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "URL_REPO_ANDA"
+  }
+}
