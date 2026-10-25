@@ -9,7 +9,8 @@ def sync_search_youtube(query, limit=5, start=0):
     ydl_opts = {
         'extract_flat': True, 
         'quiet': True,
-        'extractor_args': {'youtube': ['player_client=android,web_embedded,default']}
+        'extractor_args': {'youtube': ['player_client=android,web_embedded,default']},
+        'js_runtimes': ['nodejs', 'deno']
     }
     if os.path.exists("cookies.txt"):
         ydl_opts['cookiefile'] = 'cookies.txt'
@@ -29,7 +30,8 @@ def sync_download(url, role, stream_type="audio"):
         'outtmpl': 'downloads/%(id)s.%(ext)s', 
         'quiet': True, 
         'noplaylist': True,
-        'extractor_args': {'youtube': ['player_client=android,web_embedded,default']}
+        'extractor_args': {'youtube': ['player_client=android,web_embedded,default']},
+        'js_runtimes': ['nodejs', 'deno']
     }
     
     if os.path.exists("cookies.txt"):
