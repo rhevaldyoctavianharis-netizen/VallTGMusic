@@ -382,7 +382,8 @@ async def process_stream(chat_id, title, msg_ub, reply_to_msg, target_url, role,
         
     else:
         if not is_active: await update_stream(chat_id, "stopped", "", 0, 0, 0)
-        await msg_ub.edit(f"❌ **Gagal Memutar Media!**\nSistem gagal memproses link tersebut (Atau batas VIP terlampaui).")
+        reason = media_file if isinstance(media_file, str) and media_file.startswith("ERROR") else "Sistem gagal memproses link tersebut (atau batas VIP terlampaui)."
+        await msg_ub.edit(f"❌ **Gagal Memutar Media!**\n`{reason[:300]}`")
 
 async def progress_bar_updater(chat_id, message, total_duration, role):
     # Diperlambat dari 1 detik ke 5 detik: progress bar musik tidak perlu
