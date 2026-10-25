@@ -1,146 +1,47 @@
 {
   "name": "VallTgMusic New",
-  "description": "Bot musik Telegram untuk Voice Chat (Telethon + PyTgCalls). Isi variabel di bawah (pengganti file .env), lalu deploy.",
+  "description": "Bot musik Telegram untuk Voice Chat (Telethon + PyTgCalls).",
   "repository": "https://github.com/rhevaldyoctavianharis-netizen/VallTGMusic",
-  "keywords": [
-    "telegram",
-    "music-bot",
-    "telethon",
-    "pytgcalls",
-    "userbot",
-    "yt-dlp"
-  ],
+  "website": "https://rhevaldy.my.id",
+  "keywords": ["telegram", "music-bot", "telethon", "pytgcalls"],
   "stack": "heroku-24",
   "buildpacks": [
-    {
-      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-    },
-    {
-      "url": "heroku/nodejs"
-    },
-    {
-      "url": "heroku/python"
-    }
+    { "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest" },
+    { "url": "heroku/nodejs" },
+    { "url": "heroku/python" }
   ],
   "formation": {
-    "worker": {
-      "quantity": 1,
-      "size": "basic"
-    }
+    "worker": { "quantity": 1, "size": "basic" }
   },
   "env": {
     "API_ID": {
-      "description": "🔑 WAJIB. API ID dari https://my.telegram.org",
+      "description": "API ID dari https://my.telegram.org",
       "required": true
     },
     "API_HASH": {
-      "description": "🔑 WAJIB. API HASH dari https://my.telegram.org",
+      "description": "API Hash dari https://my.telegram.org",
       "required": true
     },
     "BOT_TOKEN": {
-      "description": "🤖 WAJIB. Token bot dari @BotFather",
+      "description": "Token bot dari @BotFather",
       "required": true
     },
     "SESSION_STRING": {
-      "description": "👤 WAJIB. Dapatkan dari bot https://t.me/ssgenduabot (atau buat sendiri dengan Telethon StringSession). Disarankan pakai akun userbot cadangan",
+      "description": "String session akun userbot. Dapatkan dari @ssgenduabot",
       "required": true
     },
     "ADMIN_ID": {
-      "description": "👑 WAJIB. ID Telegram Anda (owner bot)",
+      "description": "ID Telegram Anda (owner bot)",
       "required": true
     },
     "CREDIT_CHANNEL": {
-      "description": "Link channel kredit yang ditampilkan bot. Default: channel pembuat (https://t.me/youlittleboy)",
+      "description": "Link channel kredit (opsional)",
       "value": "https://t.me/youlittleboy",
       "required": false
     },
     "FSUB_CHANNEL": {
-      "description": "Opsional. @channel yang wajib di-join user (kosong = nonaktif)",
-      "required": false
-    },
-    "MAX_STREAMS": {
-      "description": "Batas stream bersamaan",
-      "value": "3",
-      "required": false
-    },
-    "MAX_PARALLEL_DOWNLOADS": {
-      "description": "Batas unduhan paralel",
-      "value": "2",
-      "required": false
-    },
-    "MAX_PENDING_JOBS": {
-      "description": "Batas antrean job",
-      "value": "8",
-      "required": false
-    },
-    "NICE_LEVEL": {
-      "description": "Prioritas proses (makin besar makin ramah resource)",
-      "value": "10",
-      "required": false
-    },
-    "VIDEO_QUALITY": {
-      "description": "Kualitas video: 360p, 480p, atau 720p",
-      "value": "360p",
-      "required": false
-    },
-    "USER_MAX_DURATION": {
-      "description": "Durasi maksimum (detik) untuk user biasa",
-      "value": "60",
-      "required": false
-    },
-    "VIP_MAX_DURATION": {
-      "description": "Durasi maksimum (detik) untuk VIP/Admin",
-      "value": "10800",
-      "required": false
-    },
-    "YT_AUTO_COOKIES": {
-      "description": "Biarkan false di Heroku (server tidak punya browser)",
-      "value": "false",
-      "required": false
-    },
-    "YT_FORCE_IPV4": {
-      "description": "Paksa IPv4 untuk yt-dlp (mengurangi bot-check YouTube)",
-      "value": "true",
-      "required": false
-    },
-    "YT_JS_RUNTIME": {
-      "description": "Runtime JavaScript untuk yt-dlp (Node.js sudah dipasang lewat buildpack)",
-      "value": "node",
-      "required": false
-    },
-    "AI_ENABLED": {
-      "description": "Aktifkan AI userbot. Isi true hanya jika Anda punya server Ollama publik atau memakai opencode",
-      "value": "false",
-      "required": false
-    },
-    "OLLAMA_URLS": {
-      "description": "URL server Ollama publik, pisahkan dengan koma. localhost TIDAK jalan di Heroku",
-      "required": false
-    },
-    "OLLAMA_MODEL": {
-      "description": "Model Ollama yang dipakai",
-      "value": "qwen2.5:1.5b",
-      "required": false
-    },
-    "AI_MAKER": {
-      "description": "Nama pembuat yang disebut AI",
-      "value": "NusaAi",
-      "required": false
-    },
-    "VOICE_ENABLED": {
-      "description": "Telepon suara AI. Butuh ELEVENLABS_API_KEY",
-      "value": "false",
-      "required": false
-    },
-    "ELEVENLABS_API_KEY": {
-      "description": "Opsional. API key dari elevenlabs.io (jangan dibagikan)",
-      "required": false
-    },
-    "LK21_API_URL": {
-      "description": "Opsional. URL API LK21 yang bisa diakses publik untuk /film (127.0.0.1 tidak jalan di Heroku)",
+      "description": "Channel wajib join, contoh @namachannel (opsional)",
       "required": false
     }
-  },
-  "author": "rapaldy (https://t.me/rapaldy)",
-  "website": "https://rhevaldy.my.id"
+  }
 }
