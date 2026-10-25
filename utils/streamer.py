@@ -5,14 +5,24 @@ from pytgcalls.types import MediaStream
 from core.call import call
 from database.db import update_stream
 
-def sync_search_youtube(query, limit=5, start=0):
-    ydl_opts = {
-        'extract_flat': True, 
+
+def _yt_base_opts():
+    """Opsi dasar yt-dlp: JS runtime (wajib utk solve signature/n-challenge) + cookies."""
+    opts = {
         'quiet': True,
-        'extractor_args': {'youtube': ['player_client=android,web_embedded,default']}
+        'noplaylist': True,
+        # Butuh runtime JS. Pasang `deno` lewat requirements.txt (lihat catatan).
+        'js_runtimes': {'deno': {}, 'node': {}},
+        # Fallback: unduh solver EJS dari GitHub jika paket yt-dlp-ejs tidak ada.
+        'remote_components': ['ejs:github'],
     }
     if os.path.exists("cookies.txt"):
-        ydl_opts['cookiefile'] = 'cookies.txt'
+        opts['cookiefile'] = 'cookies.txt'
+    return opts
+
+def sync_search_youtube(query, limit=5, start=0):
+    ydl_opts = _yt_base_opts()
+    ydl_opts['extract_flat'] = True
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(f"ytsearch{start+limit}:{query}", download=False)
@@ -25,15 +35,8 @@ async def search_youtube(query, limit=5, start=0):
     return await asyncio.to_thread(sync_search_youtube, query, limit, start)
 
 def sync_download(url, role, stream_type="audio"):
-    ydl_opts = {
-        'outtmpl': 'downloads/%(id)s.%(ext)s', 
-        'quiet': True, 
-        'noplaylist': True,
-        'extractor_args': {'youtube': ['player_client=android,web_embedded,default']}
-    }
-    
-    if os.path.exists("cookies.txt"):
-        ydl_opts['cookiefile'] = 'cookies.txt'
+    ydl_opts = _yt_base_opts()
+    ydl_opts['outtmpl'] = 'downloads/%(id)s.%(ext)s'
 
     if stream_type == "audio":
         ydl_opts['format'] = 'bestaudio/best'
