@@ -34,39 +34,60 @@ def sync_search_youtube(query, limit=5, start=0):
 async def search_youtube(query, limit=5, start=0):
     return await asyncio.to_thread(sync_search_youtube, query, limit, start)
 
+# Urutan percobaan client YouTube. None = default yt-dlp (paling stabil).
+# Percobaan berikutnya hanya dipakai bila yang sebelumnya gagal dgn error format/bot.
+_CLIENT_ATTEMPTS = [None, "player_client=web_safari,mweb", "player_client=tv,web"]
+_RETRY_HINTS = ("format is not available", "sign in", "signature", "challenge", "403", "only images")
+
+
+def _clean_err(e) -> str:
+    import re
+    msg = re.sub(r"\x1b\[[0-9;]*m", "", str(e))   # buang kode warna ANSI
+    return msg.replace("`", "'").strip()
+
+
 def sync_download(url, role, stream_type="audio"):
-    ydl_opts = _yt_base_opts()
-    ydl_opts['outtmpl'] = 'downloads/%(id)s.%(ext)s'
+    last_err = "Unknown"
+    for attempt in _CLIENT_ATTEMPTS:
+        ydl_opts = _yt_base_opts()
+        ydl_opts['outtmpl'] = 'downloads/%(id)s.%(ext)s'
+        if attempt:
+            ydl_opts['extractor_args'] = {'youtube': [attempt]}
 
-    if stream_type == "audio":
-        ydl_opts['format'] = 'bestaudio/best'
-        ydl_opts['postprocessors'] = [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }]
-    else:
-        ydl_opts['format'] = 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'
+        if stream_type == "audio":
+            ydl_opts['format'] = 'bestaudio/best'
+            ydl_opts['postprocessors'] = [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }]
+        else:
+            ydl_opts['format'] = 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
-            info = ydl.extract_info(url, download=False)
-            dur = info.get('duration', 0)
-            size = info.get('filesize') or info.get('filesize_approx') or 0
-            
-            if role == 'user':
-                if dur > 60: return f"ERROR: Durasi video ({dur} detik) melebihi batas User (Maks 60s)."
-                if size > 104857600: return "ERROR: Ukuran file melebihi batas User (Maks 100MB)."
-                    
-            info = ydl.extract_info(url, download=True)
-            
-            if stream_type == "audio":
-                file_path = f"downloads/{info['id']}.mp3"
-                if os.path.exists(file_path):
-                    return file_path
-            return f"downloads/{info['id']}.{info['ext']}"
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                # Cek batas role hanya utk user biasa (butuh 1x ekstraksi tambahan).
+                # VIP/admin langsung unduh -> hemat 1x proses solve JS (lambat).
+                if role == 'user':
+                    pre = ydl.extract_info(url, download=False)
+                    dur = pre.get('duration') or 0
+                    size = pre.get('filesize') or pre.get('filesize_approx') or 0
+                    if dur > 60: return f"ERROR: Durasi video ({dur} detik) melebihi batas User (Maks 60s)."
+                    if size > 104857600: return "ERROR: Ukuran file melebihi batas User (Maks 100MB)."
+
+                info = ydl.extract_info(url, download=True)
+
+                if stream_type == "audio":
+                    file_path = f"downloads/{info['id']}.mp3"
+                    if os.path.exists(file_path):
+                        return file_path
+                return f"downloads/{info['id']}.{info['ext']}"
         except Exception as e:
-            return f"ERROR: {str(e)}"
+            last_err = _clean_err(e)
+            print(f"[yt-dlp] percobaan client={attempt or 'default'} gagal: {last_err[:300]}")
+            if not any(h in last_err.lower() for h in _RETRY_HINTS):
+                break   # error lain (mis. ffmpeg hilang) -> retry tidak membantu
+    return f"ERROR: {last_err[:350]}"
 
 async def download_and_play(chat_id: int, query: str, reply_to_msg=None, url=None, role='user', stream_type="audio", play_now=True):
     if play_now:
@@ -99,10 +120,14 @@ async def download_and_play(chat_id: int, query: str, reply_to_msg=None, url=Non
         if not media_file or not os.path.exists(media_file): return False, None, False
 
         if play_now:
-            await call.play(chat_id, MediaStream(media_file))
+            try:
+                await call.play(chat_id, MediaStream(media_file))
+            except Exception as e:
+                import traceback; traceback.print_exc()
+                return False, f"ERROR: Gagal stream ke Voice Chat -> {type(e).__name__}: {_clean_err(e)[:250]}", False
             await update_stream(chat_id, "playing", media_file, 0, 0, 0)
         
         return True, media_file, is_video
     except Exception as e:
-        print(f"Stream Error: {e}")
-        return False, None, False
+        import traceback; traceback.print_exc()
+        return False, f"ERROR: {type(e).__name__}: {_clean_err(e)[:250]}", False
