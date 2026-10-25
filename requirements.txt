@@ -1,9 +1,7 @@
 Telethon>=1.36.0
-py-tgcalls
+py-tgcalls>=3.0.0
 aiosqlite>=0.20.0
 python-dotenv>=1.0.1
-yt-dlp>=2024.10.01
 Pillow>=10.0.0
-yt-dlp-ejs
 yt-dlp[default]
 deno
