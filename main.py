@@ -3,6 +3,13 @@ import importlib
 import os
 from pathlib import Path
 
+# PENTING: PyTgCalls menyimpan event loop saat objeknya dibuat (di core/call.py,
+# yaitu saat import). Kalau pakai asyncio.run() yang membuat loop BARU, call.play()
+# gagal: "got Future attached to a different loop". Jadi buat loop SEKARANG,
+# sebelum import core.*, lalu jalankan main() di loop yang sama.
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
 from core.bot import bot
 from core.userbot import userbot
 from core.call import call
@@ -116,6 +123,6 @@ async def main():
 
 if __name__ == '__main__':
     try:
-        asyncio.run(main())
+        loop.run_until_complete(main())
     except KeyboardInterrupt:
         print("\n👋 MusicBot dihentikan.")
