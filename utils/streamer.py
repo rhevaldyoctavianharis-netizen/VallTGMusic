@@ -7,6 +7,8 @@ from database.db import update_stream
 
 def sync_search_youtube(query, limit=5, start=0):
     ydl_opts = {'extract_flat': True, 'quiet': True}
+    if os.path.exists("cookies.txt"):
+        ydl_opts['cookiefile'] = 'cookies.txt'
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(f"ytsearch{start+limit}:{query}", download=False)
@@ -24,6 +26,10 @@ def sync_download(url, role, stream_type="audio"):
         'quiet': True, 
         'noplaylist': True
     }
+    
+    if os.path.exists("cookies.txt"):
+        ydl_opts['cookiefile'] = 'cookies.txt'
+
     
     if stream_type == "audio":
         ydl_opts['format'] = 'bestaudio/best'
