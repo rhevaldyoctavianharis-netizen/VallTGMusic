@@ -1,9 +1,74 @@
 import os
 import asyncio
 import yt_dlp
+import aiohttp
 from pytgcalls.types import MediaStream
 from core.call import call
 from database.db import update_stream
+
+
+# ---------------------------------------------------------------------------
+# Metadata media (judul, channel, like, views, dst.) -- disimpan di memori,
+# kunci = path file hasil download. Dipakai untuk caption controller stream.
+# ---------------------------------------------------------------------------
+MEDIA_META = {}
+
+def _extract_meta(info: dict) -> dict:
+    vid = info.get('id')
+    return {
+        'id': vid,
+        'title': info.get('title'),
+        'channel': info.get('channel') or info.get('uploader'),
+        'channel_url': info.get('channel_url') or info.get('uploader_url'),
+        'subscribers': info.get('channel_follower_count'),
+        'view_count': info.get('view_count'),
+        'like_count': info.get('like_count'),
+        'comment_count': info.get('comment_count'),
+        'duration': info.get('duration'),
+        'upload_date': info.get('upload_date'),          # YYYYMMDD
+        'url': info.get('webpage_url') or (f"https://www.youtube.com/watch?v={vid}" if vid else None),
+        'thumbnail': info.get('thumbnail'),
+        'extractor_key': info.get('extractor_key') or '',
+    }
+
+def _store_meta(path: str, info: dict):
+    try:
+        MEDIA_META[path] = _extract_meta(info)
+        while len(MEDIA_META) > 200:              # batasi pemakaian RAM
+            MEDIA_META.pop(next(iter(MEDIA_META)))
+    except Exception as e:
+        print(f"[meta] gagal simpan metadata: {e}")
+
+def get_meta(path: str):
+    return MEDIA_META.get(path)
+
+async def fetch_thumbnail(meta: dict, chat_id: int):
+    """Unduh thumbnail (jpg) ke downloads/. Return path file atau None."""
+    vid = meta.get('id')
+    cands = []
+    if str(meta.get('extractor_key', '')).lower().startswith('youtube') and vid:
+        cands += [f"https://i.ytimg.com/vi/{vid}/maxresdefault.jpg",
+                  f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg"]
+    t = meta.get('thumbnail')
+    if t and t.lower().split('?')[0].endswith(('.jpg', '.jpeg', '.png')):
+        cands.append(t)
+    if not cands:
+        return None
+    os.makedirs("downloads", exist_ok=True)
+    out = f"downloads/thumb_{chat_id}_{vid or 'x'}.jpg"
+    timeout = aiohttp.ClientTimeout(total=10)
+    async with aiohttp.ClientSession(timeout=timeout) as sess:
+        for u in cands:
+            try:
+                async with sess.get(u) as r:
+                    if r.status == 200 and (r.content_type or '').startswith('image/'):
+                        data = await r.read()
+                        if len(data) > 2000:
+                            await asyncio.to_thread(lambda: open(out, 'wb').write(data))
+                            return out
+            except Exception:
+                continue
+    return None
 
 
 def _yt_base_opts():
@@ -62,7 +127,8 @@ def sync_download(url, role, stream_type="audio"):
                 'preferredquality': '192',
             }]
         else:
-            ydl_opts['format'] = 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'
+            ydl_opts['format'] = ('bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/'
+                                   'best[height<=720][ext=mp4]/best[height<=720]/best')
 
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -80,8 +146,11 @@ def sync_download(url, role, stream_type="audio"):
                 if stream_type == "audio":
                     file_path = f"downloads/{info['id']}.mp3"
                     if os.path.exists(file_path):
+                        _store_meta(file_path, info)
                         return file_path
-                return f"downloads/{info['id']}.{info['ext']}"
+                file_path = f"downloads/{info['id']}.{info['ext']}"
+                _store_meta(file_path, info)
+                return file_path
         except Exception as e:
             last_err = _clean_err(e)
             print(f"[yt-dlp] percobaan client={attempt or 'default'} gagal: {last_err[:300]}")
