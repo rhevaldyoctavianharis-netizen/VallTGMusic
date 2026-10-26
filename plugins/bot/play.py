@@ -4,9 +4,11 @@ from core.call import call
 from utils.streamer import download_and_play, search_youtube
 from utils.inline import stream_controls, search_buttons, film_buttons, queue_buttons, listplay_buttons
 from utils.media import get_duration, get_thumbnail, safe_delete
+from utils.panel import send_stream_panel, get_duration_smart
 from database.db import get_stream, update_stream, update_time, add_to_queue, get_queue, remove_from_queue, clear_queue, get_user_full, increment_dl_count, get_global_stream_count, get_all_active_streams, set_stream_role, get_replaceable_user_stream
 from utils.checker import is_user_allowed
 import asyncio
+import html
 import aiohttp
 import os
 import re
@@ -262,7 +264,7 @@ async def format_callback(event):
     await event.delete()
     jenis = "AUDIO 🎵" if data == "audio" else "VIDEO 🎬"
     msg_ub = await bot.send_message(event.chat_id, f"⏳ **Memproses link sebagai {jenis}...**")
-    task = asyncio.create_task(process_stream(event.chat_id, "Link Media", msg_ub, None, cache["query"], cache["role"], stream_type=data, intent=cache.get("intent", "play")))
+    task = asyncio.create_task(process_stream(event.chat_id, cache.get("title") or "Link Media", msg_ub, None, cache["query"], cache["role"], stream_type=data, intent=cache.get("intent", "play")))
     background_tasks.add(task)
     task.add_done_callback(background_tasks.discard)
 
@@ -278,11 +280,14 @@ async def yts_callback(event):
     if "ytsel" in data:
         idx = int(data.split("_")[1])
         selected = cache["results"][idx]
-        await event.delete()
-        msg_ub = await bot.send_message(event.chat_id, f"⏳ **Mengunduh...**")
-        task = asyncio.create_task(process_stream(event.chat_id, selected['title'], msg_ub, None, selected['url'], cache['role'], stream_type="audio", intent=cache.get("intent", "play")))
-        background_tasks.add(task)
-        task.add_done_callback(background_tasks.discard)
+        FORMAT_CACHE[cache_key] = {
+            "query": selected['url'], "role": cache['role'],
+            "intent": cache.get("intent", "play"), "title": selected.get('title') or "Link Media",
+        }
+        btns = [[Button.inline("🎵 Audio", b"fmt_audio"), Button.inline("🎬 Video", b"fmt_video")],
+                [Button.inline("❌ Batal", b"fmt_cancel")]]
+        await event.edit(f"✅ <b>Dipilih:</b> {html.escape(selected.get('title') or '-')}\n\nPilih mode stream:",
+                         buttons=btns, parse_mode="html")
 
 @bot.on(events.NewMessage(pattern=r'(?i)^/(?:film|movie)(?:@\w+)?(?: |$)(.*)'))
 async def film_cmd(event):
@@ -361,20 +366,13 @@ async def process_stream(chat_id, title, msg_ub, reply_to_msg, target_url, role,
             return await msg_ub.edit(f"📝 **Antrean Ditambahkan:**\n`{title}`\n\n_Ketik /queue untuk melihat daftar._")
 
         await msg_ub.delete()
-        duration_raw = await get_duration(media_file)
+        duration_raw = await get_duration_smart(media_file)
         int_duration = parse_time(duration_raw)
         
         await update_stream(chat_id, "playing", media_file, 0, int_duration, 0)
         await set_stream_role(chat_id, role) 
         
-        thumb_path = await get_thumbnail(media_file, duration_raw) if is_video else None
-        caption = f"🎵 **Sedang Memutar:** `{title}`"
-        
-        if thumb_path and os.path.exists(thumb_path):
-            panel_msg = await bot.send_file(chat_id, file=thumb_path, caption=caption, buttons=stream_controls(0, int_duration, False, role))
-            os.remove(thumb_path)
-        else:
-            panel_msg = await bot.send_message(chat_id, caption, buttons=stream_controls(0, int_duration, False, role))
+        panel_msg = await send_stream_panel(chat_id, title, media_file, is_video, role, int_duration, duration_raw)
             
         task = asyncio.create_task(progress_bar_updater(chat_id, panel_msg, int_duration, role))
         background_tasks.add(task)
