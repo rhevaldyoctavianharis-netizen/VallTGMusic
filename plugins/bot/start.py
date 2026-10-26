@@ -7,6 +7,40 @@ from database.db import add_or_get_user, get_user_full, update_user, try_purchas
 from urllib.parse import urlencode
 import os
 import asyncio
+import config
+
+
+def build_start_caption(name, user_id, role, points=None):
+    # Buang karakter markdown dari nama supaya format caption tidak rusak
+    name = "".join(ch for ch in str(name) if ch not in "*_`[]")[:40].strip() or "User"
+    is_prem = role in ['vip', 'admin']
+    c, x = "✅", "❌"
+    lines = [
+        f"**Halo {name}!** 👋",
+        "Selamat datang di **OneDot Music** — bot musik Telegram untuk Voice Chat grup. Cepat, ringan, dan gratis.",
+        "",
+        "**[ INFORMASI AKUN ]**",
+        f"🆔 ID: `{user_id}`",
+        f"👤 Status Role: `{role.upper()}`",
+    ]
+    if points is not None:
+        lines.append(f"💰 Poin: `{points}`")
+    lines += [
+        "",
+        "**[ FITUR AKSES ]**",
+        f"🎵 Play Musik & Video : {c}",
+        f"🔍 Pencarian YouTube : {c}",
+        f"⏱ Durasi Tanpa Batas : {c if is_prem else x}",
+        f"💾 File Media >100MB : {c if is_prem else x}",
+        f"🔁 Loop Auto-Play : {c if is_prem else x}",
+        "",
+        "**[ PERINTAH ]**",
+        "`/play` `/queue` `/dl` `/film`" + ("" if is_prem else " (`/film` khusus VIP)"),
+        "",
+        f"💻 **Open Source:** [GitHub]({config.GITHUB_URL})" if getattr(config, "GITHUB_URL", "") else "",
+        "Gunakan tombol di bawah untuk navigasi.",
+    ]
+    return "\n".join(l for i, l in enumerate(lines) if l or (i > 0 and lines[i - 1] != "" and i < len(lines) - 1))
 
 @bot.on(events.NewMessage(pattern=r'^/start(?: |$)(.*)'))
 async def start_cmd(event):
@@ -36,37 +70,20 @@ async def start_cmd(event):
             
         me = await bot.get_me()
         loading_msg = await event.respond("⏳ *Menyiapkan Data Anda...*")
-        pfp_path = "default_pfp.jpg"
-        if user.photo:
-            pfp_path = await bot.download_profile_photo(user_id, file=f"pfp_{user_id}.jpg")
-            
         out_image = f"start_{user_id}.jpg"
         # generate_start_image() memakai PIL secara sinkron (buka file, resize,
         # render font, encode JPEG) -- kalau dipanggil langsung, ini memblokir
         # SELURUH bot (semua grup & user lain) selama proses render gambar.
         # Dijalankan di thread terpisah agar event loop tetap responsif.
-        await asyncio.to_thread(generate_start_image, pfp_path, getattr(user, 'first_name', 'User'), out_image)
+        await asyncio.to_thread(generate_start_image, None, getattr(user, 'first_name', 'User'), out_image)
         
-        is_prem = role in ['vip', 'admin']
-        c, s = "✅", "❌"
-        
-        caption = (
-            f"**Halo {getattr(user, 'first_name', 'User')}!** 👋\n\n"
-            f"**[ INFORMASI AKUN ]**\n"
-            f"👤 **Status Role:** `{role.upper()}`\n\n"
-            f"**[ FITUR AKSES ]**\n"
-            f"🎵 Play Musik & Video : {c}\n"
-            f"🔍 Pencarian YouTube : {c}\n"
-            f"⏱ Durasi Tanpa Batas : {c if is_prem else s}\n"
-            f"💾 File Media >100MB : {c if is_prem else s}\n"
-            f"🔁 Loop Auto-Play : {c if is_prem else s}\n\n"
-            f"Gunakan tombol di bawah untuk navigasi."
-        )
+        u_data = await get_user_full(user_id)
+        points = u_data[2] if u_data else 0
+        caption = build_start_caption(getattr(user, 'first_name', 'User'), user_id, role, points)
         
         await bot.send_file(event.chat_id, file=out_image, caption=caption, buttons=start_buttons(me.username))
         
         await loading_msg.delete()
-        if pfp_path and os.path.exists(pfp_path) and "default" not in pfp_path: os.remove(pfp_path)
         if os.path.exists(out_image): os.remove(out_image)
 
 @bot.on(events.CallbackQuery(pattern=b"menu_.*"))
@@ -111,20 +128,9 @@ async def callback_dispatcher(event):
         
     elif data == b"menu_back":
         user = await event.get_sender()
-        is_prem = role in ['vip', 'admin']
-        c, s = "✅", "❌"
-        caption = (
-            f"**Halo {getattr(user, 'first_name', 'User')}!** 👋\n\n"
-            f"**[ INFORMASI AKUN ]**\n"
-            f"👤 **Status Role:** `{role.upper()}`\n\n"
-            f"**[ FITUR AKSES ]**\n"
-            f"🎵 Play Musik & Video : {c}\n"
-            f"🔍 Pencarian YouTube : {c}\n"
-            f"⏱ Durasi Tanpa Batas : {c if is_prem else s}\n"
-            f"💾 File Media >100MB : {c if is_prem else s}\n"
-            f"🔁 Loop Auto-Play : {c if is_prem else s}\n\n"
-            f"Gunakan tombol di bawah untuk navigasi."
-        )
+        u_data = await get_user_full(event.sender_id)
+        points = u_data[2] if u_data else 0
+        caption = build_start_caption(getattr(user, 'first_name', 'User'), event.sender_id, role, points)
         me = await bot.get_me()
         await event.edit(caption, buttons=start_buttons(me.username))
 
