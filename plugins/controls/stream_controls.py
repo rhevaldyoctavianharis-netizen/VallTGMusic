@@ -78,20 +78,13 @@ async def stream_controller(event):
                 try: await call.play(chat_id, MediaStream(media_file))
                 except Exception as e: return await bot.send_message(chat_id, f"❌ Error PyTgCalls: {e}")
 
-                from utils.media import get_duration, get_thumbnail
+                from utils.panel import send_stream_panel, get_duration_smart
                 from plugins.bot.play import parse_time, progress_bar_updater, background_tasks
 
-                duration_raw = await get_duration(media_file)
+                duration_raw = await get_duration_smart(media_file)
                 int_duration = parse_time(duration_raw)
                 await update_stream(chat_id, "playing", media_file, 0, int_duration, 0)
-                thumb_path = await get_thumbnail(media_file, duration_raw) if bool(is_video) else None
-                caption = f"🎵 **Sedang Memutar:** `{title}`"
-
-                if thumb_path and os.path.exists(thumb_path):
-                    panel_msg = await bot.send_file(chat_id, file=thumb_path, caption=caption, buttons=stream_controls(0, int_duration, False, role_q))
-                    os.remove(thumb_path)
-                else:
-                    panel_msg = await bot.send_message(chat_id, caption, buttons=stream_controls(0, int_duration, False, role_q))
+                panel_msg = await send_stream_panel(chat_id, title, media_file, bool(is_video), role_q, int_duration, duration_raw)
 
                 task = asyncio.create_task(progress_bar_updater(chat_id, panel_msg, int_duration, role_q))
                 background_tasks.add(task)

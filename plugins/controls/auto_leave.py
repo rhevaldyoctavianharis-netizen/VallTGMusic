@@ -9,8 +9,7 @@ import asyncio
 async def play_next_queue(chat_id):
     from plugins.bot.play import progress_bar_updater, background_tasks, parse_time
     from core.bot import bot
-    from utils.media import get_duration, get_thumbnail
-    from utils.inline import stream_controls
+    from utils.panel import send_stream_panel, get_duration_smart
     
     next_data = await pop_queue(chat_id)
     
@@ -23,20 +22,13 @@ async def play_next_queue(chat_id):
             print(f"Error putar antrean: {e}")
             return await play_next_queue(chat_id)
             
-        duration_raw = await get_duration(media_file)
+        duration_raw = await get_duration_smart(media_file)
         int_duration = parse_time(duration_raw)
         
         await update_stream(chat_id, "playing", media_file, 0, int_duration, 0)
         await set_stream_role(chat_id, role_q)
         
-        thumb_path = await get_thumbnail(media_file, duration_raw) if bool(is_video) else None
-        caption = f"🎵 **Sedang Memutar:** `{title}`"
-        
-        if thumb_path and os.path.exists(thumb_path):
-            panel_msg = await bot.send_file(chat_id, file=thumb_path, caption=caption, buttons=stream_controls(0, int_duration, False, role_q))
-            os.remove(thumb_path)
-        else:
-            panel_msg = await bot.send_message(chat_id, caption, buttons=stream_controls(0, int_duration, False, role_q))
+        panel_msg = await send_stream_panel(chat_id, title, media_file, bool(is_video), role_q, int_duration, duration_raw)
             
         task = asyncio.create_task(progress_bar_updater(chat_id, panel_msg, int_duration, role_q))
         background_tasks.add(task)
