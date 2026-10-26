@@ -62,6 +62,11 @@ def start_buttons(bot_username: str):
         if credit_btn:
             rows.append([credit_btn])
 
+    # Tautan source code (GitHub). Bisa diganti lewat env GITHUB_URL.
+    github_btn = _safe_url_button("💻 Source Code (GitHub)", (getattr(config, "GITHUB_URL", "") or "").strip())
+    if github_btn:
+        rows.append([github_btn])
+
     return rows
 
 def get_progress_bar(current: float, total: float) -> str:
